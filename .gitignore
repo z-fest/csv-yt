@@ -6,3 +6,6 @@
 
 # Real data
 /**/*.csv
+
+# Generated folder
+/csv-yt

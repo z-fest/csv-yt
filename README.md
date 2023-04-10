@@ -18,5 +18,5 @@ cargo install --path .
 ## How To Use
 
 ```shell
-csv-yt nominations.csv dv 'Award' fl 'Team ' fv 'Team #' fl ' - ' fv 'Film Title'
+csv-yt nominations.csv 'Link' dv 'Award' fl 'Team ' fv 'Team #' fl ' - ' fv 'Film Title'
 ```
