@@ -1,4 +1,4 @@
-use std::{fs, env, path::PathBuf, str::FromStr, process::Command};
+use std::{env, fs, path::PathBuf, process::Command, str::FromStr};
 
 type Result<T = (), E = ()> = std::result::Result<T, E>;
 
@@ -36,7 +36,7 @@ fn main() -> Result {
     let Some(link_column) = args.next() else {
         return help();
     };
-    
+
     println!("Link column: {link_column}");
 
     loop {
@@ -70,6 +70,7 @@ fn main() -> Result {
         return Err(());
     };
     let headers: Vec<_> = headers.iter().map(String::from).collect();
+
     let Some(link_column) = headers.iter().position(|x| x == &link_column) else {
         eprintln!("Link column not found: {link_column}");
 
@@ -106,7 +107,7 @@ fn main() -> Result {
                     };
 
                     filename.push_str(lit);
-                },
+                }
                 FileLit(lit) => filename.push_str(lit),
                 DirVar(var) => {
                     let mut lit = None;
@@ -124,16 +125,19 @@ fn main() -> Result {
                     };
 
                     dirname.push_str(lit);
-                },
+                }
                 DirLit(lit) => dirname.push_str(lit),
             }
         }
+
+        dirname = dirname.replace(|c| matches!(c, '/' | '\\'), "-");
+        filename = filename.replace(|c| matches!(c, '/' | '\\'), "-");
 
         {
             let mut dir = PathBuf::from_str(FOLDER).unwrap();
 
             dir.push(&dirname);
-            
+
             fs::create_dir_all(dir).unwrap();
         }
 
@@ -141,6 +145,7 @@ fn main() -> Result {
             &record[link_column],
             "-o",
             &format!("{FOLDER}/{dirname}/{filename}.%(ext)s"),
+            "--no-playlist",
         ];
         let Ok(mut child) = Command::new("yt-dlp").args(args).spawn() else {
             eprintln!("Failed to spawn yt-dlp");
