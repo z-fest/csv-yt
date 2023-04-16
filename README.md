@@ -25,7 +25,7 @@ rustup update
 
 Install csv-yt
 
-```
+```shell
 cargo install --path .
 ```
 
