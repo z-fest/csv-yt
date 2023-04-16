@@ -5,13 +5,27 @@ Automated downloading of YouTube videos from CSV
 
 Follow instructions at https://rustup.rs/
 
+Clone using the following command:
+
 ```shell
-git clone git@github.com:z-fest/csv-yt.git
+git clone https://github.com/z-fest/csv-yt.git
+```
 
+Go into the repository
+
+```shell
 cd csv-yt
+```
 
+Update Rust
+
+```shell
 rustup update
+```
 
+Install csv-yt
+
+```
 cargo install --path .
 ```
 
